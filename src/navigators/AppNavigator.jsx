@@ -4,19 +4,21 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { createDrawerNavigator } from '@react-navigation/drawer'
 import ExpenseList from '../screens/ExpenseList'
 import EditExpense from '../screens/EditExpense'
-import { StatusBar } from 'react-native'
+import { StatusBar, Text, View } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import HeaderExpensesList from '../components/HeaderExpensesList'
+import { colors } from '../constants/theme'
 
 const AppNavigator = () => {
   const Stack = createStackNavigator()
 
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor={'white'} barStyle={'dark-content'} />
+      <StatusBar backgroundColor={colors.white} barStyle={'dark-content'} />
       
       <SafeAreaProvider>
         <Stack.Navigator>
-          <Stack.Screen name="ExpenseList" component={ExpenseList} />
+          <Stack.Screen name="ExpenseList" component={ExpenseList} options={{ header: () => <HeaderExpensesList /> }} />
           <Stack.Screen name="EditExpense" component={EditExpense} />
         </Stack.Navigator>
       </SafeAreaProvider>
