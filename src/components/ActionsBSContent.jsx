@@ -15,7 +15,7 @@ const ActionsBSContent = ({ item, index, bSContentMeasuredHeight, setBSContentMe
       onLayout={evt => {
         height = evt.nativeEvent.layout.height + (PixelRatio.get() * evt.nativeEvent.layout.y)
         if (bSContentMeasuredHeight == 0) {
-          console.log('set actions bs height to: ' + height)
+          // console.log('set actions bs height to: ' + height)
           setBSContentMeasuredHeight(height)
         }
       }}
