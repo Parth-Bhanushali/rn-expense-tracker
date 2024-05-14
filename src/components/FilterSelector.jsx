@@ -24,6 +24,10 @@ const FilterSelector = ({ data, currentFilter, onFilterPress }) => {
           }
         </View>
       </ScrollView>
+
+      <View style={{ width: '100%', height: 1, marginTop: 8, backgroundColor: 'lightgray' }}>
+
+      </View>
     </View>
   )
 }

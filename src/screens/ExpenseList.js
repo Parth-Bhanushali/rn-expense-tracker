@@ -1,6 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import FilterSelector from '../components/FilterSelector'
+import { dummyExpenseList } from '../constants/dummy'
+import Expense from '../components/Expense'
+import { colors } from '../constants/theme'
+import Separator from '../components/Separator'
 
 const Filters = {
   ALL: "All",
@@ -15,6 +19,18 @@ const Filters = {
   CUSTOM: "Custom"
 }
 
+const Expenses = () => {
+  return (
+    <FlatList 
+      keyExtractor={(i, index) => index}
+      data={dummyExpenseList}
+      renderItem={Expense}
+      ItemSeparatorComponent={Separator}
+      contentContainerStyle={{ paddingBottom: 8, backgroundColor: colors.white }}
+    />
+  )
+}
+
 const ExpenseList = () => {
   const [currentFilter, setCurrentFilter] = React.useState(Filters.ALL)
 
@@ -23,8 +39,10 @@ const ExpenseList = () => {
   }
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <FilterSelector data={Filters} currentFilter={currentFilter} onFilterPress={handleOnFilterPress} />
+    
+      <Expenses />
     </View>
   )
 }
