@@ -19,12 +19,12 @@ const Filters = {
   CUSTOM: "Custom"
 }
 
-const Expenses = () => {
+const Expenses = ({ onExpenseLongPress }) => {
   return (
     <FlatList 
       keyExtractor={(i, index) => index}
       data={dummyExpenseList}
-      renderItem={Expense}
+      renderItem={(props) => <Expense onLongPress={onExpenseLongPress} {...props} />}
       ItemSeparatorComponent={Separator}
       contentContainerStyle={{ paddingBottom: 8, backgroundColor: colors.white }}
     />
@@ -38,11 +38,15 @@ const ExpenseList = () => {
     setCurrentFilter(selected)
   }
 
+  function handleOnExpenseLongPress (item, index) {
+    console.log('long press happened: ' + index)
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <FilterSelector data={Filters} currentFilter={currentFilter} onFilterPress={handleOnFilterPress} />
     
-      <Expenses />
+      <Expenses onExpenseLongPress={handleOnExpenseLongPress} />
     </View>
   )
 }

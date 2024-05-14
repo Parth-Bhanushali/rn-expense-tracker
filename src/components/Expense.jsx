@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { colors } from '../constants/theme'
 import Chip from './Chip'
 import { Status } from '../constants/dummy'
 
 const Expense = (props) => {
-  const { index, item } = props
+  const { index, item, onLongPress } = props
   const dateObj = new Date(item.date)
   
   let date = String(dateObj.getDate())
@@ -39,7 +39,14 @@ const Expense = (props) => {
   }
                                       
   return (
-    <View style={{ flex: 1, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: colors.white }}>
+    <TouchableOpacity
+      onPress={() => onLongPress(item, index)}
+      onLongPress={() => onLongPress(item, index)}
+      activeOpacity={1}
+      style={{ 
+        flex: 1, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: colors.white 
+      }}
+    >
       
       {/* first row */}
       <View style={{ flex: 1, marginBottom: 8, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -138,7 +145,7 @@ const Expense = (props) => {
         </View>
 
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
