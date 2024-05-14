@@ -8,9 +8,15 @@ import { StatusBar, Text, View } from 'react-native'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import HeaderExpensesList from '../components/HeaderExpensesList'
 import { colors } from '../constants/theme'
+import BottomSheet from '../components/BottomSheet'
 
 const AppNavigator = () => {
   const Stack = createStackNavigator()
+  
+  const bottomSheetRef = React.useRef(null)
+  const [bottomSheetContent, setBottomSheetContent] = React.useState(null);
+  const [bottomSheetHeight, setBottomSheetHeight] = React.useState('0')
+  const [bottomSheetLineRequired, setBottomSheetLineRequired] = React.useState(true)
 
   return (
     <NavigationContainer>
@@ -18,9 +24,28 @@ const AppNavigator = () => {
       
       <SafeAreaProvider>
         <Stack.Navigator>
-          <Stack.Screen name="ExpenseList" component={ExpenseList} options={{ header: () => <HeaderExpensesList /> }} />
+          <Stack.Screen 
+            name="ExpenseList" 
+            options={{ header: () => <HeaderExpensesList /> }} 
+          >
+            {(props) => <ExpenseList {...props} bottomSheetRef={bottomSheetRef} 
+              setBottomSheetHeight={(height) => {
+                setBottomSheetHeight(height)
+              }}
+              setBottomSheetContent={(content) => {
+                setBottomSheetContent(content);
+              }}
+              setBottomSheetLineRequired={(required) => {
+                setBottomSheetLineRequired(required);
+              }}
+            />}
+          </Stack.Screen>
           <Stack.Screen name="EditExpense" component={EditExpense} />
         </Stack.Navigator>
+
+        <BottomSheet ref={bottomSheetRef} snapTo={bottomSheetHeight} lineRequired={bottomSheetLineRequired} backgroundColor='white' backDropColor='black'>
+          {bottomSheetContent}
+        </BottomSheet>
       </SafeAreaProvider>
     </NavigationContainer>
   )
