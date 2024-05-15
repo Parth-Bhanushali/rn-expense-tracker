@@ -27,6 +27,7 @@ function getRandomBillNumber () {
 
 export const dummyExpenseList = [
   {
+    id: 0,
     project_name: "NTPC Korba",
     project_site: ProjectSite.CHHATISGARH,
     date: 1715694250838,
@@ -50,6 +51,7 @@ export const dummyExpenseList = [
     status: Status.PENDING,
   },
   {
+    id: 1,
     project_name: "Rihand Themal Power Station",
     project_site: ProjectSite.UTTARPRADESH,
     date: 1715611161778,
@@ -73,6 +75,7 @@ export const dummyExpenseList = [
     status: Status.APPROVED,
   },
   {
+    id: 2,
     project_name: "NTPC Dadri",
     project_site: ProjectSite.UTTARPRADESH,
     date: 1715511161778,
@@ -101,6 +104,7 @@ export const dummyExpenseList = [
     status: Status.REJECTED,
   },
   {
+    id: 3,
     project_name: "NTPC Jogra",
     project_site: ProjectSite.MADHYAPRADESH,
     date: 1715311161778,

@@ -26,12 +26,14 @@ const Filters = {
   CUSTOM: "Custom"
 }
 
-const Expenses = ({ data, onExpenseLongPress, onViewBillsPress, focused }) => {
+const Expenses = ({ onExpenseLongPress, onViewBillsPress, focused }) => {
+  const { allExpenses } = useSelector(state => state.common)
+
   return (
     <FlatList 
-      keyExtractor={(i, index) => index}
-      data={data}
-      renderItem={(props) => <Expense onLongPress={onExpenseLongPress} onViewBillsPress={onViewBillsPress} focused={focused} isLastInList={props.index == data.length - 1} {...props} />}
+      keyExtractor={i => i.id}
+      data={allExpenses}
+      renderItem={(props) => <Expense onLongPress={onExpenseLongPress} onViewBillsPress={onViewBillsPress} focused={focused} isLastInList={props.index == allExpenses.length - 1} {...props} />}
       ItemSeparatorComponent={Separator}
       contentContainerStyle={{ paddingBottom: 8, backgroundColor: colors.white, flexGrow: 1 }}
     />
@@ -45,7 +47,7 @@ const ExpenseList = (props) => {
 
   const dispatch = useDispatch()
 
-  const { focusedExpense, allExpenses } = useSelector(state => state.common)
+  const { focusedExpense } = useSelector(state => state.common)
 
   function handleOnBackPress () {
     Alert.alert("Alert", "Implementation not provided.")
@@ -172,8 +174,7 @@ const ExpenseList = (props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <Expenses 
-        data={allExpenses}
+      <Expenses
         onExpenseLongPress={handleOnExpenseLongPress} 
         onViewBillsPress={handleOnViewBillsPress}
         focused={focusedExpense} 

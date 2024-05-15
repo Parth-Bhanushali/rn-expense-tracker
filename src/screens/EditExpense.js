@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, Alert, TouchableOpacity } from 'react-native'
 import React from 'react'
 import HeaderEditExpense from '../components/HeaderEditExpense'
 import { colors } from '../constants/theme'
@@ -10,6 +10,8 @@ import receipt_long from '../assets/receipt_long.png'
 
 import { convertMillisToDateText } from '../utils/HelperUtils'
 import { ScrollView } from 'react-native-gesture-handler'
+import { useDispatch } from 'react-redux'
+import { updateExpense } from '../redux/CommonReducer'
 
 const InputField = ({ title, text, isMandatory, icon, onPress, errorMessage }) => {
   return (
@@ -23,7 +25,9 @@ const InputField = ({ title, text, isMandatory, icon, onPress, errorMessage }) =
         </Text>
       </View>
 
-      <View 
+      <TouchableOpacity
+        activeOpacity={0.75} 
+        onPress={onPress}
         style={{ 
           marginTop: 10, paddingVertical: 12, paddingHorizontal: 16, 
           flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
@@ -37,7 +41,7 @@ const InputField = ({ title, text, isMandatory, icon, onPress, errorMessage }) =
           resizeMode='contain'
           source={icon}
         />
-      </View>
+      </TouchableOpacity>
 
       {
         errorMessage &&
@@ -49,9 +53,15 @@ const InputField = ({ title, text, isMandatory, icon, onPress, errorMessage }) =
   )
 }
 
-const AddBillDetailsButton = () => {
+const AddBillDetailsButton = ({ onPress }) => {
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={onPress}
+      style={{ 
+        flexDirection: 'row', alignItems: 'center', gap: 8 
+      }}
+    >
       <Image 
         resizeMode='contain'
         source={add_circle}
@@ -60,13 +70,15 @@ const AddBillDetailsButton = () => {
       <Text style={{ color: colors.orange, fontSize: 16 }}>Add Bill Details
         <Text> *</Text>
       </Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 
-const Bill = ({ expense }) => {
+const Bill = ({ expense, index, onPress }) => {
   return (
-    <View 
+    <TouchableOpacity
+      activeOpacity={0.75}
+      onPress={() => onPress(expense, index)} 
       style={{ 
         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' ,
         borderWidth: 1, borderColor: colors.separatorLine, borderRadius: 10,
@@ -98,26 +110,69 @@ const Bill = ({ expense }) => {
           source={cancel}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
-const ButtonSaveChanges = () => {
+const ButtonSaveChanges = ({ onPress }) => {
   return (
-    <View style={{ backgroundColor: colors.orange, borderRadius: 50, paddingHorizontal: 16, paddingVertical: 16, alignItems: 'center' }}>
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.75} 
+      style={{ 
+        backgroundColor: colors.orange, 
+        borderRadius: 50, 
+        paddingHorizontal: 16, paddingVertical: 16, 
+        alignItems: 'center' 
+      }}
+    >
       <Text style={{ color: colors.white, includeFontPadding: false, fontWeight: '600' }}>Save Changes</Text>
-    </View>
+    </TouchableOpacity>
   )
 }
 
 const EditExpense = (props) => {
   const { index, item } = props.route.params
+  const [billExpenses, setBillExpenses] = React.useState(item.expenses)
+  const dispatch = useDispatch()
 
   React.useEffect(() => {
     props.navigation.setOptions({
       header: () => <HeaderEditExpense title="Edit Expense Request" onBackPress={() => props.navigation.goBack()} />,
     });
   }, []);
+
+  function handleAddBillDetailsPress () {
+    Alert.alert("Add Bill Details", "Implementation not provided.\n\nWe can show a dialog with input fields to facilitate adding details for the expense.")
+  }
+  
+  function handleProjectNameDDPress () {
+    Alert.alert("Select Project Name", "Implementation not provided.\n\nIn live project, a dropdown would be displayed here.")
+  }
+  
+  function handleProjectSiteDDPress () {
+    Alert.alert("Select Project Site", "Implementation not provided.\n\nIn live project, a dropdown would be displayed here.")
+  }
+  
+  function handleDatePickerPress () {
+    Alert.alert("Select Date", "Implementation not provided.\n\nWe can display calender picker here.")
+  }
+
+  function handleOnSaveChangesPress () {
+    const modifiedExpense = {...item, expenses: billExpenses}
+    
+    dispatch(updateExpense({ index: index, modifiedExpense: modifiedExpense }))
+
+    props.navigation.goBack()
+  } 
+
+  function handleOnBillExpensePress (expense, i) {
+    if (billExpenses.length == 1) {
+      Alert.alert("Can't remove", "For this assignment, you are required to keep atleast one expense.")
+      return
+    }
+    setBillExpenses(prev => [...prev.filter((val, iIndex) => iIndex != i)])
+  }
   
   return (
     <View style={{ flex: 1, backgroundColor: colors.white, paddingHorizontal: 16 }}>
@@ -127,7 +182,7 @@ const EditExpense = (props) => {
           text={item.project_name} 
           isMandatory 
           icon={arrow_drop_down} 
-          onPress={() => {}}
+          onPress={handleProjectNameDDPress}
           errorMessage={"Error message goes here"}
         />
         
@@ -138,7 +193,7 @@ const EditExpense = (props) => {
           text={item.project_site} 
           isMandatory 
           icon={arrow_drop_down} 
-          onPress={() => {}} 
+          onPress={handleProjectSiteDDPress} 
         />
         
         <View style={{ marginVertical: 8 }} />
@@ -148,20 +203,20 @@ const EditExpense = (props) => {
           text={convertMillisToDateText(item.date)} 
           isMandatory 
           icon={calender_month} 
-          onPress={() => {}} 
+          onPress={handleDatePickerPress} 
         />
 
         <View style={{ marginVertical: 16 }} />
 
-        <AddBillDetailsButton />
+        <AddBillDetailsButton onPress={handleAddBillDetailsPress} />
 
         <View style={{ marginVertical: 8 }} />
 
         {/* Bills */}
         <View style={{ gap: 12 }}>      
           {
-            item.expenses.map((exp, index) => {
-              return <Bill key={index + ":" + exp.date} expense={exp} index={index} />
+            billExpenses.map((exp, i) => {
+              return <Bill key={i + ":" + exp.date} expense={exp} index={i} onPress={handleOnBillExpensePress} />
             })
           }
         </View>
@@ -169,7 +224,7 @@ const EditExpense = (props) => {
       </ScrollView>
 
       <View style={{ paddingVertical: 16 }}>
-        <ButtonSaveChanges />
+        <ButtonSaveChanges onPress={handleOnSaveChangesPress} />
       </View>
     </View>
   )
