@@ -40,6 +40,7 @@ const AppNavigator = () => {
               }}
             />}
           </Stack.Screen>
+          
           <Stack.Screen name="EditExpense" component={EditExpense} />
         </Stack.Navigator>
 
