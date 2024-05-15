@@ -3,19 +3,11 @@ import React from 'react'
 import { colors } from '../constants/theme'
 import Chip from './Chip'
 import { Status } from '../constants/dummy'
+import { convertMillisToDateText } from '../utils/HelperUtils'
 
 const Expense = (props) => {
   const { index, item, onLongPress, focused } = props
-  const dateObj = new Date(item.date)
-  
-  let date = String(dateObj.getDate())
-  let month = String(dateObj.getMonth() + 1)
-  let year = String(dateObj.getFullYear())
-
-  date = date.padStart(2, "0")
-  month = month.padStart(2, "0")
-
-  const dateText = date + "/" + month + "/" + year
+  const dateText = convertMillisToDateText(item.date)
 
   const status = item.status
   const statusChipBackgroundColor = status == Status.PENDING 
