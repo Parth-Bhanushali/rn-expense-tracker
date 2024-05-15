@@ -6,7 +6,7 @@ import { Status } from '../constants/dummy'
 import { convertMillisToDateText } from '../utils/HelperUtils'
 
 const Expense = (props) => {
-  const { index, item, onLongPress, focused } = props
+  const { index, item, onLongPress, onViewBillsPress, focused } = props
   const dateText = convertMillisToDateText(item.date)
 
   const status = item.status
@@ -60,11 +60,20 @@ const Expense = (props) => {
       {/* second row */}
       <View style={{ marginBottom: 8, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
         <View>
-          <View style={{ paddingHorizontal: 12, paddingBottom: 10, paddingTop: 6, backgroundColor: "#FBE7D8", borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}>
+          <TouchableOpacity 
+            activeOpacity={0.7}
+            onPress={onViewBillsPress}
+            style={{ 
+              paddingHorizontal: 12, paddingBottom: 10, paddingTop: 6, 
+              backgroundColor: "#FBE7D8", 
+              borderRadius: 10, 
+              justifyContent: 'center', alignItems: 'center' 
+            }}
+          >
             <View style={{ paddingBottom: 2, borderBottomWidth: 1, borderColor: colors.orange }}>
               <Text style={{ color: colors.orange, fontSize: 12 }}>View Bills</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View style={{ marginLeft: 8 }}>

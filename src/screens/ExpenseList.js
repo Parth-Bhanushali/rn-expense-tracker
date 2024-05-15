@@ -26,12 +26,12 @@ const Filters = {
   CUSTOM: "Custom"
 }
 
-const Expenses = ({ onExpenseLongPress, focused }) => {
+const Expenses = ({ onExpenseLongPress, onViewBillsPress, focused }) => {
   return (
     <FlatList 
       keyExtractor={(i, index) => index}
       data={dummyExpenseList}
-      renderItem={(props) => <Expense onLongPress={onExpenseLongPress} focused={focused} {...props} />}
+      renderItem={(props) => <Expense onLongPress={onExpenseLongPress} onViewBillsPress={onViewBillsPress} focused={focused} {...props} />}
       ItemSeparatorComponent={Separator}
       contentContainerStyle={{ paddingBottom: 8, backgroundColor: colors.white }}
     />
@@ -160,9 +160,17 @@ const ExpenseList = (props) => {
     }, 0);
   }
 
+  function handleOnViewBillsPress () {
+    Alert.alert("View Bills", "No implementation provided.")
+  }
+
   return (
     <View style={{ flex: 1 }}>
-      <Expenses onExpenseLongPress={handleOnExpenseLongPress} focused={focusedExpense} />
+      <Expenses 
+        onExpenseLongPress={handleOnExpenseLongPress} 
+        onViewBillsPress={handleOnViewBillsPress}
+        focused={focusedExpense} 
+      />
     </View>
   )
 }
