@@ -8,7 +8,7 @@ const Chip = ({
 }) => {
   return (
     <TouchableOpacity
-      activeOpacity={0.8}
+      activeOpacity={!!onPress ? 0.7 : 1}
       onPress={onPress}
       style={{
         backgroundColor: 
