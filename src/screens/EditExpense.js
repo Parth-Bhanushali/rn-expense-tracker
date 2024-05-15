@@ -41,6 +41,7 @@ const InputField = ({ title, text, isMandatory, icon, onPress, errorMessage }) =
         <Image 
           resizeMode='contain'
           source={icon}
+          style={{ width: 24, height: 24 }}
         />
       </TouchableOpacity>
 
@@ -66,6 +67,7 @@ const AddBillDetailsButton = ({ onPress }) => {
       <Image 
         resizeMode='contain'
         source={add_circle}
+        style={{ width: 24, height: 24 }}
       />
 
       <Text style={{ color: colors.orange, fontSize: 16 }}>Add Bill Details
@@ -96,6 +98,7 @@ const Bill = ({ expense, index, onPress }) => {
           <Image 
             resizeMode='contain'
             source={receipt_long}
+            style={{ width: 24, height: 24 }}
           />
         </View>
 
@@ -109,6 +112,7 @@ const Bill = ({ expense, index, onPress }) => {
         <Image 
           resizeMode='contain'
           source={cancel}
+          style={{ width: 24, height: 24 }}
         />
       </View>
     </TouchableOpacity>
