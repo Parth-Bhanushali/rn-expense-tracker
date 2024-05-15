@@ -1,7 +1,8 @@
-import { StyleSheet, View, Dimensions } from 'react-native'
+import { StyleSheet, View, Dimensions, StatusBar } from 'react-native'
 import React, { ReactNode, forwardRef, useCallback, useImperativeHandle } from 'react'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import BackDrop from './BackDrop'
+import { colors } from '../constants/theme'
 
 type Props = {
     snapTo: string;
@@ -17,6 +18,8 @@ export interface BottomSheetMethods {
 }
 
 const BottomSheet = forwardRef<BottomSheetMethods, Props>(({snapTo, backgroundColor, lineRequired, backDropColor, children}: Props, ref) => {
+  const [isOpen, setIsOpen] = React.useState(false)
+  
   const {height} = Dimensions.get('window')
   const closeHeight = height
   var openHeight = 0
@@ -40,11 +43,13 @@ const BottomSheet = forwardRef<BottomSheetMethods, Props>(({snapTo, backgroundCo
   const expand = useCallback(() => {
     'worklet';
     topAnimation.value = withTiming(openHeight, configExpand)
+    setIsOpen(true)
   }, [openHeight, topAnimation])
   
   const close = useCallback(() => {
     'worklet';
     topAnimation.value = withTiming(closeHeight, configClose)
+    setIsOpen(false)
   }, [closeHeight, topAnimation])
 
   useImperativeHandle(
@@ -64,6 +69,8 @@ const BottomSheet = forwardRef<BottomSheetMethods, Props>(({snapTo, backgroundCo
 
   return (
         <>
+            <StatusBar backgroundColor={isOpen ? 'gray' : colors.white} barStyle={'dark-content'} />
+
             <BackDrop
                 topAnimation={topAnimation}
                 closeHeight={closeHeight}
