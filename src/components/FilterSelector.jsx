@@ -10,10 +10,6 @@ const FilterSelector = ({ data, currentFilter, onFilterPress }) => {
       style={{
         backgroundColor: colors.white,
         minHeight: 56,
-        shadowColor: colors.black,
-        shadowOpacity: 1,
-        shadowRadius: 3,
-        elevation: 2
       }}>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1 }}>
         <View style={{ flexDirection: 'row', paddingHorizontal: 16, alignItems: 'center', gap: 10 }}>
@@ -25,9 +21,9 @@ const FilterSelector = ({ data, currentFilter, onFilterPress }) => {
         </View>
       </ScrollView>
 
-      <View style={{ width: '100%', height: 1, marginTop: 8, backgroundColor: 'lightgray' }}>
+      {/* <View style={{ width: '100%', height: 1, marginTop: 8, backgroundColor: 'lightgray' }}>
 
-      </View>
+      </View> */}
     </View>
   )
 }

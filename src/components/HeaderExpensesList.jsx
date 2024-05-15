@@ -32,7 +32,7 @@ const HeaderRight = ({ onCancelPress }) => {
   )
 }
 
-const HeaderExpensesList = ({ onBackPress, onCancelPress, showCancel }) => {
+const HeaderExpensesList = ({ title, onBackPress, onCancelPress, showCancel }) => {
   return (
     <View style={{ height: 56, backgroundColor: colors.white, flexDirection: "row" }}>
       <View style={{ position: "absolute", left: 0, height: "100%", justifyContent: "center" }}>
@@ -40,15 +40,12 @@ const HeaderExpensesList = ({ onBackPress, onCancelPress, showCancel }) => {
       </View>
 
       <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
-        <Text style={{ fontSize: 18, fontWeight: "600" }}>Expenses List</Text>
+        <Text style={{ fontSize: 18, fontWeight: "600" }}>{title}</Text>
       </View>
 
-      {
-        showCancel &&
-        <View style={{ position: "absolute", right: 0, height: "100%", justifyContent: "center" }}>
-          <HeaderRight onCancelPress={onCancelPress} />
-        </View>
-      }
+      <View style={{ position: "absolute", display: showCancel ? 'flex' : 'none', right: 0, height: "100%", justifyContent: "center" }}>
+        <HeaderRight onCancelPress={onCancelPress} />
+      </View>
     </View>
   )
 }

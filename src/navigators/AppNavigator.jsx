@@ -25,8 +25,7 @@ const AppNavigator = () => {
       <SafeAreaProvider>
         <Stack.Navigator>
           <Stack.Screen 
-            name="ExpenseList" 
-            options={{ header: () => <HeaderExpensesList /> }} 
+            name="ExpenseList"
           >
             {(props) => <ExpenseList {...props} bottomSheetRef={bottomSheetRef} 
               setBottomSheetHeight={(height) => {

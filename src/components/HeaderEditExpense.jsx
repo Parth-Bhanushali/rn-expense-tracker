@@ -22,7 +22,15 @@ const HeaderLeft = ({ onBackPress }) => {
 
 const HeaderEditExpense = ({ title, onBackPress }) => {
   return (
-    <View style={{ height: 56, backgroundColor: colors.white, flexDirection: "row" }}>
+    <View 
+      style={{ 
+        height: 56, backgroundColor: colors.white, flexDirection: "row",
+        shadowColor: colors.black,
+        shadowOpacity: 1,
+        shadowRadius: 3,
+        elevation: 3 
+      }}
+    >
       <View style={{ position: "absolute", left: 0, height: "100%", justifyContent: "center" }}>
         <HeaderLeft onBackPress={onBackPress} />
       </View>

@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, View } from 'react-native'
+import { Alert, FlatList, StyleSheet, View } from 'react-native'
 import React from 'react'
 import FilterSelector from '../components/FilterSelector'
 import { dummyExpenseList } from '../constants/dummy'
@@ -9,6 +9,7 @@ import ActionsBSContent from '../components/ActionsBSContent'
 import DeleteBSContent from '../components/DeleteBSContent'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFocusedExpense, removeFocusFromExpense } from '../redux/CommonReducer'
+import HeaderExpensesList from '../components/HeaderExpensesList'
 
 var timeout = null
 
@@ -45,6 +46,36 @@ const ExpenseList = (props) => {
   const dispatch = useDispatch()
 
   const { focusedExpense } = useSelector(state => state.common)
+
+  function handleOnBackPress () {
+    Alert.alert("Alert", "Implementation not provided.")
+  }
+
+  React.useEffect(() => {
+    props.navigation.setOptions({
+      header: () => {
+        return (
+          <View style={{
+            backgroundColor: 'white',
+            shadowColor: colors.black,
+            shadowOpacity: 1,
+            shadowRadius: 3,
+            elevation: 3
+          }}>
+            <HeaderExpensesList
+              title="Expenses List"
+              onBackPress={handleOnBackPress}
+              onCancelPress={handleBSCancelPress}
+              // showCancel={focusedExpense != null ? true : false}
+              showCancel={false}
+            />
+
+            <FilterSelector data={Filters} currentFilter={currentFilter} onFilterPress={handleOnFilterPress} />
+          </View>
+        )
+      }
+    });
+  }, [currentFilter])
 
   React.useEffect(() => {
     // required to measure layout in advance
@@ -131,8 +162,6 @@ const ExpenseList = (props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <FilterSelector data={Filters} currentFilter={currentFilter} onFilterPress={handleOnFilterPress} />
-    
       <Expenses onExpenseLongPress={handleOnExpenseLongPress} focused={focusedExpense} />
     </View>
   )
