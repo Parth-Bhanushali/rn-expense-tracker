@@ -121,10 +121,12 @@ const ExpenseList = (props) => {
     dispatch(removeFocusFromExpense(null))
     dispatch(removeExpense({ index: index }))
 
-    Snackbar.show({
-      text: 'Removed ' + item.project_name + ', ' + item.project_site,
-      duration: Snackbar.LENGTH_SHORT,
-    });
+    setTimeout(() => {
+      Snackbar.show({
+        text: 'Removed ' + item.project_name + ', ' + item.project_site,
+        duration: Snackbar.LENGTH_SHORT,
+      });
+    }, 250)
   }
 
   function handleBSOptionAfterDelay(delay, selectedOption, item, index) {

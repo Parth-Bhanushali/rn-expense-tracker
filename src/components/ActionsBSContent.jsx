@@ -28,7 +28,7 @@ const ActionsBSContent = ({ item, index, bSContentMeasuredHeight, setBSContentMe
       }}
     >
 
-      <View style={{ flexDirection: 'row', display: status == Status.PENDING ? 'flex' : 'none', justifyContent: 'space-between', paddingTop: 8, paddingBottom: 4, paddingHorizontal: 16, gap: 8, flex: 1 }}>
+      <View style={[{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 8, paddingBottom: 4, paddingHorizontal: 16, gap: 8, flex: 1 }, status == null || status == undefined || status == Status.PENDING ? {display: 'flex'} : {display: 'none'}]}>
         <View style={{ justifyContent: 'center' }}>
           <TouchableOpacity
             onPress={() => onOptionSelected(OPTIONS.edit, item, index)}
@@ -58,7 +58,7 @@ const ActionsBSContent = ({ item, index, bSContentMeasuredHeight, setBSContentMe
         </View>
       </View>
 
-      <View style={{ flexDirection: 'row', display: status != Status.PENDING ? 'flex' : 'none', justifyContent: 'space-between', paddingTop: 8, paddingBottom: 4, paddingHorizontal: 16, gap: 8, flex: 1 }}>
+      <View style={{ flexDirection: 'row', display: status == Status.APPROVED || status == Status.REJECTED ? 'flex' : 'none', justifyContent: 'space-between', paddingTop: 8, paddingBottom: 4, paddingHorizontal: 16, gap: 8, flex: 1 }}>
         <Text style={{ flex: 1, textAlign: 'center', fontSize: 16, includeFontPadding: false }}>Sorry, the status is already: 
           <Text style={{ color: status == Status.APPROVED ? colors.green : status == Status.REJECTED && colors.red, fontWeight: '600' }}>  {status}</Text>
         </Text>
