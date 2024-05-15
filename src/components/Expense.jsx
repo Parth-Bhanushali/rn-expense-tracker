@@ -4,6 +4,7 @@ import { colors } from '../constants/theme'
 import Chip from './Chip'
 import { Status } from '../constants/dummy'
 import { convertMillisToDateText } from '../utils/HelperUtils'
+import Watermark from './Watermark'
 
 const Expense = (props) => {
   const { index, item, onLongPress, onViewBillsPress, focused, isLastInList } = props
@@ -153,6 +154,15 @@ const Expense = (props) => {
         isLastInList &&
         <View style={{ height: 1, width: "120%", alignSelf: 'center', backgroundColor: colors.separatorLine }} />
       }
+
+      {
+        isLastInList &&
+        <View style={{ backgroundColor: 'white', paddingVertical: 16 }}>
+          <Watermark />
+        </View>
+      }
+
+      
     </View>
   )
 }

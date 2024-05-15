@@ -1,4 +1,4 @@
-import { Alert, FlatList, StyleSheet, View } from 'react-native'
+import { Alert, FlatList, Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import FilterSelector from '../components/FilterSelector'
 import Expense from '../components/Expense'
@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setFocusedExpense, removeFocusFromExpense, removeExpense } from '../redux/CommonReducer'
 import HeaderExpensesList from '../components/HeaderExpensesList'
 import Snackbar from 'react-native-snackbar';
+import Watermark from '../components/Watermark'
+import filtering from '../assets/filtering.png'
 
 var timeout = null
 
@@ -26,15 +28,33 @@ const Filters = {
   CUSTOM: "Custom"
 }
 
-const Expenses = ({ onExpenseLongPress, onViewBillsPress, focused }) => {
+const Expenses = ({ filter, onExpenseLongPress, onViewBillsPress, focused }) => {
   const { allExpenses } = useSelector(state => state.common)
+  const displayedData = filter == Filters.ALL ? allExpenses : []
 
   return (
     <FlatList 
       keyExtractor={i => i.id}
-      data={allExpenses}
-      renderItem={(props) => <Expense onLongPress={onExpenseLongPress} onViewBillsPress={onViewBillsPress} focused={focused} isLastInList={props.index == allExpenses.length - 1} {...props} />}
+      data={displayedData}
+      renderItem={(props) => <Expense onLongPress={onExpenseLongPress} onViewBillsPress={onViewBillsPress} focused={focused} isLastInList={props.index == displayedData.length - 1} {...props} />}
       ItemSeparatorComponent={Separator}
+      ListEmptyComponent={
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Image 
+            resizeMode='contain'
+            source={filtering}
+            style={{ width: 75, height: 75, marginVertical: 16 }}
+          />
+          
+          <Text style={{ color: colors.textNormal, fontSize: 16, textAlign: 'center' }}>Selected filter: 
+            <Text style={{ fontWeight: '600', color: colors.orange }}>  {filter}</Text>
+          </Text>
+
+          <Text style={{ marginVertical: 8, fontSize: 14, color: colors.darkgray, textAlign: 'center' }}>( Filtered data to be displayed here )</Text>
+        
+          <Watermark isAbsolute={true} />
+        </View>
+      }
       contentContainerStyle={{ paddingBottom: 8, backgroundColor: colors.white, flexGrow: 1 }}
     />
   )
@@ -177,6 +197,7 @@ const ExpenseList = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <Expenses
+        filter={currentFilter}
         onExpenseLongPress={handleOnExpenseLongPress} 
         onViewBillsPress={handleOnViewBillsPress}
         focused={focusedExpense} 

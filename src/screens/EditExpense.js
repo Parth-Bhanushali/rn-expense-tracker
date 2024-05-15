@@ -13,6 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 import { updateExpense } from '../redux/CommonReducer'
 import Snackbar from 'react-native-snackbar';
+import Watermark from '../components/Watermark'
 
 const InputField = ({ title, text, isMandatory, icon, onPress, errorMessage }) => {
   return (
@@ -234,6 +235,10 @@ const EditExpense = (props) => {
             })
           }
         </View>
+
+        <View style={{ marginVertical: 24 }} />
+
+        <Watermark />
 
       </ScrollView>
 
