@@ -7,6 +7,8 @@ import { colors } from '../constants/theme'
 import Separator from '../components/Separator'
 import ActionsBSContent from '../components/ActionsBSContent'
 import DeleteBSContent from '../components/DeleteBSContent'
+import { useDispatch, useSelector } from 'react-redux'
+import { setFocusedExpense, removeFocusFromExpense } from '../redux/CommonReducer'
 
 var timeout = null
 
@@ -23,12 +25,12 @@ const Filters = {
   CUSTOM: "Custom"
 }
 
-const Expenses = ({ onExpenseLongPress }) => {
+const Expenses = ({ onExpenseLongPress, focused }) => {
   return (
     <FlatList 
       keyExtractor={(i, index) => index}
       data={dummyExpenseList}
-      renderItem={(props) => <Expense onLongPress={onExpenseLongPress} {...props} />}
+      renderItem={(props) => <Expense onLongPress={onExpenseLongPress} focused={focused} {...props} />}
       ItemSeparatorComponent={Separator}
       contentContainerStyle={{ paddingBottom: 8, backgroundColor: colors.white }}
     />
@@ -39,6 +41,10 @@ const ExpenseList = (props) => {
   const [currentFilter, setCurrentFilter] = React.useState(Filters.ALL)
   const [actionsBSContentMeasuredHeight, setActionsBSContentMeasuredHeight] = React.useState(0)
   const [deleteBSContentMeasuredHeight, setDeleteBSContentMeasuredHeight] = React.useState(0)
+
+  const dispatch = useDispatch()
+
+  const { focusedExpense } = useSelector(state => state.common)
 
   React.useEffect(() => {
     // required to measure layout in advance
@@ -65,6 +71,7 @@ const ExpenseList = (props) => {
 
   function handleBSCancelPress() {
     props.bottomSheetRef.current?.close()
+    dispatch(removeFocusFromExpense(null))
   }
 
   function handleActionsBSOptionSelected(selectedOption, item, index) {
@@ -80,6 +87,7 @@ const ExpenseList = (props) => {
 
   function handleOnDeleteSelected (item, index) {
     props.bottomSheetRef.current?.close()
+    dispatch(removeFocusFromExpense(null))
     // TODO
     console.log('Implement delete for: ', index)
   }
@@ -92,6 +100,8 @@ const ExpenseList = (props) => {
             item: item,
             index: index
           })
+          
+          dispatch(removeFocusFromExpense(null))
           break;
         case "DELETE":
           props.setBottomSheetLineRequired(true)
@@ -108,6 +118,8 @@ const ExpenseList = (props) => {
   }
 
   function handleOnExpenseLongPress (item, index) {
+    dispatch(setFocusedExpense(index))
+    
     props.setBottomSheetHeight(actionsBSContentMeasuredHeight.toString())
     
     setTimeout(() => {
@@ -121,7 +133,7 @@ const ExpenseList = (props) => {
     <View style={{ flex: 1 }}>
       <FilterSelector data={Filters} currentFilter={currentFilter} onFilterPress={handleOnFilterPress} />
     
-      <Expenses onExpenseLongPress={handleOnExpenseLongPress} />
+      <Expenses onExpenseLongPress={handleOnExpenseLongPress} focused={focusedExpense} />
     </View>
   )
 }

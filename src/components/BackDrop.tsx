@@ -1,6 +1,8 @@
 import { StyleSheet, TouchableWithoutFeedback, } from 'react-native'
 import React from 'react'
 import Animated, { SharedValue, interpolate, useAnimatedStyle } from 'react-native-reanimated';
+import { useDispatch } from 'react-redux'
+import { removeFocusFromExpense } from '../redux/CommonReducer'
 
 type Props = {
     topAnimation: SharedValue<number>;
@@ -11,6 +13,11 @@ type Props = {
 }
 
 const BackDrop = ({ topAnimation, openHeight, closeHeight, close, backDropColor }: Props) => {
+    const dispatch = useDispatch()
+    function onClosed() {
+      dispatch(removeFocusFromExpense(null))
+    }
+
     const backdropAnimation = useAnimatedStyle(() => {
         const opacity = interpolate(
             topAnimation.value,
@@ -29,6 +36,7 @@ const BackDrop = ({ topAnimation, openHeight, closeHeight, close, backDropColor 
     return (
         <TouchableWithoutFeedback onPress={() => {
             close()
+            onClosed()
         }}>
             <Animated.View style={[styles.container, backdropAnimation, {
                 backgroundColor: backDropColor
