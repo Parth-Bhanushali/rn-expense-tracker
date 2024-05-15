@@ -122,4 +122,100 @@ export const dummyExpenseList = [
     ],
     status: Status.PENDING,
   },
+  {
+    id: 4,
+    project_name: "Project Lakshmi",
+    project_site: ProjectSite.GUJARAT,
+    date: 1715151161778,
+    expenses: [
+      {
+        paid_for: PaymentSite.HOTEL,
+        amount: 15000,
+        bill_number: getRandomBillNumber()
+      },
+      {
+        paid_for: PaymentSite.FOOD,
+        amount: 8500,
+        bill_number: getRandomBillNumber()
+      },
+      {
+        paid_for: PaymentSite.TRAVEL,
+        amount: 2500,
+        bill_number: getRandomBillNumber()
+      }
+    ],
+    status: Status.REJECTED,
+  },
+  {
+    id: 5,
+    project_name: "Torrent Power Station",
+    project_site: ProjectSite.MAHARASHTRA,
+    date: 1715071161778,
+    expenses: [
+      {
+        paid_for: PaymentSite.HOTEL,
+        amount: 12000,
+        bill_number: getRandomBillNumber()
+      },
+      {
+        paid_for: PaymentSite.FOOD,
+        amount: 4500,
+        bill_number: getRandomBillNumber()
+      },
+      {
+        paid_for: PaymentSite.TRAVEL,
+        amount: 6000,
+        bill_number: getRandomBillNumber()
+      }
+    ],
+    status: Status.PENDING,
+  },
+  {
+    id: 6,
+    project_name: "Indian Railway Yard",
+    project_site: ProjectSite.TELANGANA,
+    date: 1714801161778,
+    expenses: [
+      {
+        paid_for: PaymentSite.PROJECT,
+        amount: 30000,
+        bill_number: getRandomBillNumber()
+      },
+      {
+        paid_for: PaymentSite.HOTEL,
+        amount: 10000,
+        bill_number: getRandomBillNumber()
+      },
+      {
+        paid_for: PaymentSite.FOOD,
+        amount: 5550,
+        bill_number: getRandomBillNumber()
+      },
+      {
+        paid_for: PaymentSite.TRAVEL,
+        amount: 1250,
+        bill_number: getRandomBillNumber()
+      }
+    ],
+    status: Status.PENDING,
+  },
+  {
+    id: 7,
+    project_name: "Reliance Communications",
+    project_site: ProjectSite.MADHYAPRADESH,
+    date: 1714501161778,
+    expenses: [
+      {
+        paid_for: PaymentSite.FOOD,
+        amount: 5000,
+        bill_number: getRandomBillNumber()
+      },
+      {
+        paid_for: PaymentSite.TRAVEL,
+        amount: 2500,
+        bill_number: getRandomBillNumber()
+      }
+    ],
+    status: Status.APPROVED,
+  },
 ]
