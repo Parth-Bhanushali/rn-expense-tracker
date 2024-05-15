@@ -22,7 +22,7 @@ const ProjectSite = {
 }
 
 function getRandomBillNumber () {
-  return "#" + Math.floor(Math.random() * 9999)
+  return Math.floor(Math.random() * 9999)
 }
 
 export const dummyExpenseList = [
