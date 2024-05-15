@@ -49,7 +49,7 @@ const ExpenseList = (props) => {
   React.useEffect(() => {
     // required to measure layout in advance
     if (typeof props.setBottomSheetContent != 'undefined') {
-      props.setBottomSheetLineRequired(false)
+      props.setBottomSheetLineRequired(true)
       props.setBottomSheetContent(<ActionsBSContent bSContentMeasuredHeight={actionsBSContentMeasuredHeight} setBSContentMeasuredHeight={setActionsBSContentMeasuredHeight} onCancelPress={handleBSCancelPress} />)
     }
   }, [])
@@ -60,7 +60,7 @@ const ExpenseList = (props) => {
         props.setBottomSheetLineRequired(true)
         props.setBottomSheetContent(<DeleteBSContent bSContentMeasuredHeight={deleteBSContentMeasuredHeight} setBSContentMeasuredHeight={setDeleteBSContentMeasuredHeight} onCancelPress={handleBSCancelPress} />)
       }
-    }, 350)
+    }, 1000)
 
     return () => clearTimeout(clear)
   }, [])

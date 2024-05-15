@@ -20,7 +20,7 @@ const ActionsBSContent = ({ item, index, bSContentMeasuredHeight, setBSContentMe
         }
       }}
       style={{
-        height: 100,
+        height: 100, backgroundColor: colors.white, flex: 1, paddingVertical: 25,
         paddingHorizontal: 16, gap: 8,
       }}
     >
