@@ -127,6 +127,8 @@ const ExpenseList = (props) => {
       Snackbar.show({
         text: 'Removed ' + item.project_name + ', ' + item.project_site,
         duration: Snackbar.LENGTH_SHORT,
+        backgroundColor: colors.red,
+        textColor: colors.white
       });
     }, 250)
   }

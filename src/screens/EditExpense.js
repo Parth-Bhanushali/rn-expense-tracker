@@ -12,6 +12,7 @@ import { convertMillisToDateText } from '../utils/HelperUtils'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useDispatch } from 'react-redux'
 import { updateExpense } from '../redux/CommonReducer'
+import Snackbar from 'react-native-snackbar';
 
 const InputField = ({ title, text, isMandatory, icon, onPress, errorMessage }) => {
   return (
@@ -164,6 +165,15 @@ const EditExpense = (props) => {
     dispatch(updateExpense({ index: index, modifiedExpense: modifiedExpense }))
 
     props.navigation.goBack()
+
+    setTimeout(() => {
+      Snackbar.show({
+        text: 'Updated ' + item.project_name + ', ' + item.project_site,
+        duration: Snackbar.LENGTH_SHORT,
+        backgroundColor: colors.green,
+        textColor: colors.white
+      });
+    }, 250)
   } 
 
   function handleOnBillExpensePress (expense, i) {
