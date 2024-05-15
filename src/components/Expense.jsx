@@ -5,7 +5,7 @@ import Chip from './Chip'
 import { Status } from '../constants/dummy'
 
 const Expense = (props) => {
-  const { index, item, onLongPress } = props
+  const { index, item, onLongPress, focused } = props
   const dateObj = new Date(item.date)
   
   let date = String(dateObj.getDate())
@@ -44,7 +44,7 @@ const Expense = (props) => {
       onLongPress={() => onLongPress(item, index)}
       activeOpacity={1}
       style={{ 
-        flex: 1, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: colors.white 
+        flex: 1, paddingHorizontal: 16, paddingVertical: 12, backgroundColor: index == focused ? colors.ultralightgreen : colors.white 
       }}
     >
       
