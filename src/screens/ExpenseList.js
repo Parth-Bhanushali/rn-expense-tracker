@@ -1,15 +1,15 @@
 import { Alert, FlatList, StyleSheet, View } from 'react-native'
 import React from 'react'
 import FilterSelector from '../components/FilterSelector'
-import { dummyExpenseList } from '../constants/dummy'
 import Expense from '../components/Expense'
 import { colors } from '../constants/theme'
 import Separator from '../components/Separator'
 import ActionsBSContent from '../components/ActionsBSContent'
 import DeleteBSContent from '../components/DeleteBSContent'
 import { useDispatch, useSelector } from 'react-redux'
-import { setFocusedExpense, removeFocusFromExpense } from '../redux/CommonReducer'
+import { setFocusedExpense, removeFocusFromExpense, removeExpense } from '../redux/CommonReducer'
 import HeaderExpensesList from '../components/HeaderExpensesList'
+import Snackbar from 'react-native-snackbar';
 
 var timeout = null
 
@@ -26,14 +26,14 @@ const Filters = {
   CUSTOM: "Custom"
 }
 
-const Expenses = ({ onExpenseLongPress, onViewBillsPress, focused }) => {
+const Expenses = ({ data, onExpenseLongPress, onViewBillsPress, focused }) => {
   return (
     <FlatList 
       keyExtractor={(i, index) => index}
-      data={dummyExpenseList}
-      renderItem={(props) => <Expense onLongPress={onExpenseLongPress} onViewBillsPress={onViewBillsPress} focused={focused} {...props} />}
+      data={data}
+      renderItem={(props) => <Expense onLongPress={onExpenseLongPress} onViewBillsPress={onViewBillsPress} focused={focused} isLastInList={props.index == data.length - 1} {...props} />}
       ItemSeparatorComponent={Separator}
-      contentContainerStyle={{ paddingBottom: 8, backgroundColor: colors.white }}
+      contentContainerStyle={{ paddingBottom: 8, backgroundColor: colors.white, flexGrow: 1 }}
     />
   )
 }
@@ -45,7 +45,7 @@ const ExpenseList = (props) => {
 
   const dispatch = useDispatch()
 
-  const { focusedExpense } = useSelector(state => state.common)
+  const { focusedExpense, allExpenses } = useSelector(state => state.common)
 
   function handleOnBackPress () {
     Alert.alert("Alert", "Implementation not provided.")
@@ -119,8 +119,12 @@ const ExpenseList = (props) => {
   function handleOnDeleteSelected (item, index) {
     props.bottomSheetRef.current?.close()
     dispatch(removeFocusFromExpense(null))
-    // TODO
-    console.log('Implement delete for: ', index)
+    dispatch(removeExpense({ index: index }))
+
+    Snackbar.show({
+      text: 'Removed ' + item.project_name + ', ' + item.project_site,
+      duration: Snackbar.LENGTH_SHORT,
+    });
   }
 
   function handleBSOptionAfterDelay(delay, selectedOption, item, index) {
@@ -167,6 +171,7 @@ const ExpenseList = (props) => {
   return (
     <View style={{ flex: 1 }}>
       <Expenses 
+        data={allExpenses}
         onExpenseLongPress={handleOnExpenseLongPress} 
         onViewBillsPress={handleOnViewBillsPress}
         focused={focusedExpense} 
