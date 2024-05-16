@@ -40,18 +40,20 @@ const Expenses = ({ filter, onExpenseLongPress, onViewBillsPress, focused }) => 
       ItemSeparatorComponent={Separator}
       ListEmptyComponent={
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Image 
-            resizeMode='contain'
-            source={filtering}
-            style={{ width: 75, height: 75, marginVertical: 16 }}
-          />
-          
-          <Text style={{ color: colors.textNormal, fontSize: 16, textAlign: 'center' }}>Selected filter: 
-            <Text style={{ fontWeight: '600', color: colors.orange }}>  {filter}</Text>
-          </Text>
+          <View style={{alignItems: 'center', paddingBottom: 16}}>
+            <Image 
+              resizeMode='contain'
+              source={filtering}
+              style={{ width: 75, height: 75, marginVertical: 16 }}
+            />
+            
+            <Text style={{ color: colors.textNormal, fontSize: 16, textAlign: 'center' }}>Selected filter: 
+              <Text style={{ fontWeight: '600', color: colors.orange }}>  {filter}</Text>
+            </Text>
 
-          <Text style={{ marginVertical: 8, fontSize: 14, color: colors.darkgray, textAlign: 'center' }}>( Filtered data to be displayed here )</Text>
-        
+            <Text style={{ marginVertical: 8, fontSize: 14, color: colors.darkgray, textAlign: 'center' }}>( Filtered data to be displayed here )</Text>
+          </View>
+
           <Watermark isAbsolute={true} />
         </View>
       }
